@@ -1,6 +1,4 @@
 #include "hex_record_writer.h"
-#include "../optiboot.h"
-#include "../user/user_hooks.h"
 #include <string.h>
 
 uint8_t hex_to_byte( char *str )
