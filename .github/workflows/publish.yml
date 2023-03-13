@@ -18,7 +18,7 @@ jobs:
         tar -czvf bootloader_assets.tar.gz src/*.c src/*.h src/user/* src/deps/embedded-external-flash-memory/*
     - name: Package Hex Writer
       run: |
-        tar -czvf hex_writer_assets.tar.gz src/app/*
+        tar -czvf hex_writer_assets.tar.gz src/app/* src/user/user_settings.h
     - name: Release
       run: |
         version="$(. ./utilities/version/get_version.sh)"
