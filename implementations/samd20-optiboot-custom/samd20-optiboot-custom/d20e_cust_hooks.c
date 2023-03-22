@@ -84,14 +84,14 @@ void user_deselect_ext_flash()
 int user_write_ext_flash( uint8_t *data, uint16_t len )
 {
     io_write( spi_io, data, len );
-    return (int)len;
+    return 0;
 }
 
 // TODO: User must implement this function, see user_hooks.h for details.
 int user_read_ext_flash( uint8_t *data, uint16_t len )
 {
     io_read( spi_io, data, len );
-    return (int)len;
+    return 0;
 }
 
 // TODO: User must implement this function, see user_hooks.h for details.
