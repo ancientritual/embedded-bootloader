@@ -19,3 +19,5 @@ git add src/app/*.c
 git add src/app/*.h
 git add src/user/*.c
 git add src/user/*.h
+git add implementations/samd20-optiboot-custom/samd20-optiboot-custom/*.c
+git add implementations/samd20-optiboot-custom/samd20-optiboot-custom/*.h
