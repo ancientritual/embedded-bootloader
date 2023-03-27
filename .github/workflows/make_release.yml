@@ -29,8 +29,7 @@ jobs:
 
     - name: Build project
       run: |
-        cd implementations/samd20-optiboot-custom/samd20-optiboot-custom/Debug
-        make all
+        microchip-studio --headless -open "/path/to/your/project/solution.atsln" -build
 
     - name: Create release artifact
       if: startsWith(github.ref, 'refs/tags/v')
