@@ -13,9 +13,13 @@ jobs:
     - name: Check out repository
       uses: actions/checkout@v2
 
+    - name: Download Microchip Studio installer
+      run: |
+        Invoke-WebRequest -Uri "https://www.microchip.com/downloads/en/SWLibrary/Web/WebInstaller/Studio/MicrochipStudio.exe" -OutFile "MicrochipStudio.exe"
+
     - name: Install Microchip Studio
       run: |
-        choco install microchipstudio -y
+        Start-Process -FilePath ".\MicrochipStudio.exe" -ArgumentList "/Silent" -Wait
 
     - name: Install dependencies
       run: |
