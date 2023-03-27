@@ -19,7 +19,7 @@ jobs:
         sudo apt-get install -y wget
         wget https://www.microchip.com/mplabx-ide-linux-installer -O microchip_studio.sh
         chmod +x microchip_studio.sh
-        sudo ./microchip_studio.sh -- --unattendedmodeui minimal 
+        yes | sudo ./microchip_studio.sh -- --unattendedmodeui minimal 
         echo "PATH=$PATH:/opt/microchip/mplabx/v5.xx/mplab_platform/bin:/opt/microchip/mplabx/v5.xx/mplab_ide/bin:/opt/microchip/mplabx/v5.xx/mplab_data" >> $GITHUB_ENV
 
     - name: Install dependencies
