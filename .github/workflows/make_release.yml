@@ -15,7 +15,7 @@ jobs:
 
     - name: Download Microchip Studio installer
       run: |
-        Invoke-WebRequest -Uri "https://www.microchip.com/downloads/en/SWLibrary/Web/WebInstaller/Studio/MicrochipStudio.exe" -OutFile "MicrochipStudio.exe"
+        Invoke-WebRequest -Uri "https://ww1.microchip.com/downloads/en/DeviceDoc/mplabx-ide-5.55-windows-installer.exe" -OutFile "MicrochipStudio.exe"
 
     - name: Install Microchip Studio
       run: |
