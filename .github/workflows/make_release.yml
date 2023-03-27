@@ -1,0 +1,53 @@
+name: Build and Release Firmware
+
+on:
+    tags:
+      - '*'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+
+    - name: Set up Microchip Studio environment
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y wget
+        wget https://www.microchip.com/mplabx-ide-linux-installer -O microchip_studio.sh
+        chmod +x microchip_studio.sh
+        sudo ./microchip_studio.sh -- --unattendedmodeui minimal --Enable-components 'Programmer;Studio;SAM_BA'
+        echo "PATH=$PATH:/opt/microchip/mplabx/v5.xx/mplab_platform/bin:/opt/microchip/mplabx/v5.xx/mplab_ide/bin:/opt/microchip/mplabx/v5.xx/mplab_data" >> $GITHUB_ENV
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get install -y gcc-arm-none-eabi
+        sudo apt-get install -y dfu-programmer
+
+    - name: Build project
+      run: |
+        cd implementations/samd20-optiboot-custom/samd20-optiboot-custom
+        make all
+
+    - name: Create release artifact
+      if: startsWith(github.ref, 'refs/tags/v')
+      run: |
+        mkdir -p release
+        cp implementations/samd20-optiboot-custom/samd20-optiboot-custom/Debug/samd20-optiboot-custom.hex release/samd20-optiboot-custom.hex
+
+    - name: Upload release artifact
+      if: startsWith(github.ref, 'refs/tags/v')
+      uses: actions/upload-artifact@v2
+      with:
+        name: firmware
+        path: release/
+
+    - name: Create GitHub Release
+      if: startsWith(github.ref, 'refs/tags/v')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: release/samd20-optiboot-custom.hex
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
