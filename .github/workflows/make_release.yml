@@ -13,13 +13,9 @@ jobs:
     - name: Check out repository
       uses: actions/checkout@v2
 
-    - name: Download Microchip Studio installer
-      run: |
-        Invoke-WebRequest -Uri "https://ww1.microchip.com/downloads/en/DeviceDoc/mplabx-ide-5.55-windows-installer.exe" -OutFile "MicrochipStudio.exe"
-
     - name: Install Microchip Studio
       run: |
-        Start-Process -FilePath ".\MicrochipStudio.exe" -ArgumentList "/Silent" -Wait
+        Start-Process -FilePath "utilities\installers\as-installer-7.0.2594-web.exe" -ArgumentList "/Silent" -Wait
 
     - name: Install dependencies
       run: |
