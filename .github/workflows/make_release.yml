@@ -1,9 +1,10 @@
 name: Build and Release Firmware
 
 on:
-  tags:
-    - '*'
-
+  push:
+    tags:
+      - '*'
+      
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
