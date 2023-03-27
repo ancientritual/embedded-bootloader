@@ -7,29 +7,24 @@ on:
 
 jobs:
   build-and-release:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - name: Check out repository
       uses: actions/checkout@v2
 
-    - name: Set up Microchip Studio environment
+    - name: Install Microchip Studio
       run: |
-        sudo apt-get update
-        sudo apt-get install -y wget
-        wget https://www.microchip.com/mplabx-ide-linux-installer -O microchip_studio.sh
-        chmod +x microchip_studio.sh
-        yes | sudo ./microchip_studio.sh -- --mode unattended --unattendedmodeui minimal
-        echo "PATH=$PATH:/opt/microchip/mplabx/v5.xx/mplab_platform/bin:/opt/microchip/mplabx/v5.xx/mplab_ide/bin:/opt/microchip/mplabx/v5.xx/mplab_data" >> $GITHUB_ENV
+        choco install microchipstudio -y
 
     - name: Install dependencies
       run: |
-        sudo apt-get install -y gcc-arm-none-eabi
-        sudo apt-get install -y dfu-programmer
+        choco install gcc-arm-none-eabi -y
+        choco install dfu-programmer -y
 
     - name: Build project
       run: |
-        microchip-studio --headless -open implementations/samd20-optiboot-custom/samd20-optiboot-custom.atsln -build
+        & 'C:\Program Files (x86)\Microchip\MPLABX\v6.xx\microchip\mplab_platform\bin\microchip-studio.exe' --headless -open "implementations\samd20-optiboot-custom\samd20-optiboot-custom.atsln" -build
 
     - name: Create release artifact
       if: startsWith(github.ref, 'refs/tags/v')
