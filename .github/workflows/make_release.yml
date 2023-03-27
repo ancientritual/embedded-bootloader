@@ -1,8 +1,8 @@
 name: Build and Release Firmware
 
 on:
-    tags:
-      - '*'
+  tags:
+    - '*'
 
 jobs:
   build-and-release:
