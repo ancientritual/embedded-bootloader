@@ -13,24 +13,29 @@ jobs:
     - name: Check out repository
       uses: actions/checkout@v2
 
-    - name: Install Microchip Studio
+    - name: Install build tools
       run: |
-        Start-Process -FilePath "utilities\installers\as-installer-7.0.2594-web.exe" -ArgumentList "/Silent" -Wait
+        choco install make mingw gcc-arm-none-eabi -y
 
-    - name: Install dependencies
+    - name: Add build tools to PATH
       run: |
-        choco install gcc-arm-none-eabi -y
-        choco install dfu-programmer -y
+        echo "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+        echo "C:\ProgramData\chocolatey\lib\gcc-arm-none-eabi\tools\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+    - name: Create symbolic link for ARM GCC toolchain
+      run: |
+        New-Item -ItemType SymbolicLink -Path "C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin" -Target "C:\ProgramData\chocolatey\lib\gcc-arm-none-eabi\tools\bin"
 
     - name: Build project
       run: |
-        & 'C:\Program Files (x86)\Microchip\MPLABX\v6.xx\microchip\mplab_platform\bin\microchip-studio.exe' --headless -open "implementations\samd20-optiboot-custom\samd20-optiboot-custom.atsln" -build
+        cd implementations\samd20-optiboot-custom\samd20-optiboot-custom\Debug
+        make all
 
     - name: Create release artifact
       if: startsWith(github.ref, 'refs/tags/v')
       run: |
         mkdir -p release
-        cp implementations/samd20-optiboot-custom/samd20-optiboot-custom/Debug/samd20-optiboot-custom.hex release/samd20-optiboot-custom.hex
+        cp implementations\samd20-optiboot-custom\samd20-optiboot-custom\Debug\samd20-optiboot-custom.hex release\samd20-optiboot-custom.hex
 
     - name: Upload release artifact
       if: startsWith(github.ref, 'refs/tags/v')
@@ -43,6 +48,6 @@ jobs:
       if: startsWith(github.ref, 'refs/tags/v')
       uses: softprops/action-gh-release@v1
       with:
-        files: release/samd20-optiboot-custom.hex
+        files: release\samd20-optiboot-custom.hex
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
