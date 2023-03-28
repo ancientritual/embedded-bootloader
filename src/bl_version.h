@@ -3,6 +3,6 @@
 
 #define BL_VERSION_MAJOR    0
 #define BL_VERSION_MINOR    0
-#define BL_VERSION_REV      64
+#define BL_VERSION_REV      65
 
 #endif /* BL_VERSION_H */
