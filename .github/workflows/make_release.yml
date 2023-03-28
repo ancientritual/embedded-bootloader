@@ -28,7 +28,7 @@ jobs:
 
     - name: Extract Atmel SAMD20 DFP
       run: |
-        Expand-Archive -Path "Atmel.SAMD20_DFP.atpack" -DestinationPath "Atmel.SAMD20_DFP"
+        Expand-Archive -Path "Atmel.SAMD20_DFP.atpack" -DestinationPath "SAMD20_DFP"
 
     - name: Download CMSIS 5.4.0
       run: |
