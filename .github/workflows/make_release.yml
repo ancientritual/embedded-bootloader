@@ -24,9 +24,9 @@ jobs:
 
     - name: Show installed build tools
       run: |
-        where mingw32-make.exe
-        where gcc.exe
-        where arm-none-eabi-gcc.exe
+        get-command mingw32-make.exe
+        get-command gcc.exe
+        get-command arm-none-eabi-gcc.exe
 
     - name: Download Atmel SAMD20 DFP
       run: |
