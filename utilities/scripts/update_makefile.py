@@ -5,7 +5,7 @@ def update_makefile(makefile_path, original_path, new_path):
     with open(makefile_path, 'r') as file:
         filedata = file.read()
 
-    filedata = re.sub(re.escape(original_path), re.escape(new_path), filedata)
+    filedata = re.sub(re.escape(original_path), new_path, filedata)
 
     with open(makefile_path, 'w') as file:
         file.write(filedata)
