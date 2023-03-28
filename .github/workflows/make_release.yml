@@ -22,9 +22,8 @@ jobs:
         echo "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
         echo "C:\ProgramData\chocolatey\lib\gcc-arm-embedded\tools\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
-    - name: Create symbolic link for ARM GCC toolchain
-      run: |
-        New-Item -ItemType SymbolicLink -Path "C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin" -Target "C:\ProgramData\chocolatey\lib\gcc-arm-embedded\tools\bin"
+    - name: Update Makefile paths
+      run: python utilities\scripts\update_makefile.py
 
     - name: Build project
       run: |
