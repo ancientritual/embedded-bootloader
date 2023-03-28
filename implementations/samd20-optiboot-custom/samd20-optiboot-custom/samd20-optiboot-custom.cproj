@@ -306,6 +306,7 @@
       <Value>../../../../src</Value>
       <Value>../../../../src/user</Value>
       <Value>../../../../src/deps/embedded-external-flash-memory</Value>
+      <Value>../Device_Startup</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize debugging experience (-Og)</armgcc.compiler.optimization.level>
