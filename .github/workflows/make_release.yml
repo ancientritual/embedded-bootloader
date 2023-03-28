@@ -44,6 +44,10 @@ jobs:
       run: |
         Expand-Archive -Path "CMSIS_5.4.0.zip" -DestinationPath "CMSIS_5.4.0"
 
+    - name: Print SAMD20 DFP
+      run : |
+        get-childitem .\CMSIS_5.4.0\ -recurse
+        get-childitem .\SAMD20_DFP\ -recurse
 
     - name: Update Makefile paths
       run: python utilities\scripts\update_makefile.py
