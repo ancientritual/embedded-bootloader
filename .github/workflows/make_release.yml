@@ -44,10 +44,10 @@ jobs:
       run: |
         Expand-Archive -Path "CMSIS_5.4.0.zip" -DestinationPath "CMSIS_5.4.0"
 
-    - name: Print SAMD20 DFP
-      run : |
-        get-childitem .\CMSIS_5.4.0\ -recurse
-        get-childitem .\SAMD20_DFP\ -recurse
+    #- name: Print SAMD20 DFP
+    #  run : |
+    #    get-childitem .\CMSIS_5.4.0\ -recurse
+    #    get-childitem .\SAMD20_DFP\ -recurse
 
     - name: Update Makefile paths
       run: |
@@ -77,14 +77,14 @@ jobs:
         cp src\user\user_settings.h release\hex_writer_assets\user
 
     - name: Upload release artifact
-      if: startsWith(github.ref, 'refs/tags/*')
+      # if: startsWith(github.ref, 'refs/tags/*')
       uses: actions/upload-artifact@v2
       with:
         name: firmware
         path: release/
 
     - name: Create GitHub Release
-      if: startsWith(github.ref, 'refs/tags/*')
+      # if: startsWith(github.ref, 'refs/tags/*')
       uses: softprops/action-gh-release@v1
       with:
         files: release/**
