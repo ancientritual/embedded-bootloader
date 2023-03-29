@@ -50,17 +50,13 @@ jobs:
         get-childitem .\SAMD20_DFP\ -recurse
 
     - name: Update Makefile paths
-      run: python utilities\scripts\update_makefile.py
+      run: |
+        python utilities\scripts\update_makefile.py
+        python utilities\scripts\make_dep_dirs.py
 
     - name: Build project
       run: |
         cd implementations\samd20-optiboot-custom\samd20-optiboot-custom\Debug
-        mkdir -p Device_Startup
-        mkdir -p Config
-        mkdir -p examples
-        mkdir -p hal
-        mkdir -p hpl
-        mkdir -p hri
         make all
 
     - name: Create release artifact
