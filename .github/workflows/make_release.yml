@@ -60,7 +60,7 @@ jobs:
         make all
 
     - name: Create release artifact
-      if: startsWith(github.ref, 'refs/tags/v')
+      #if: startsWith(github.ref, 'refs/tags/v')
       run: |
         mkdir -p release\bin
         mkdir -p release\bootloader_assets
@@ -75,6 +75,7 @@ jobs:
         cp src\deps\embedded-external-flash-memory\* release\bootloader_assets\deps\embedded-external-flash-memory
         cp src\app\* release\hex_writer_assets\app
         cp src\user\user_settings.h release\hex_writer_assets\user
+        Compress-Archive -Path "release\*" -DestinationPath "release.tar.gz"
 
     - name: Upload release artifact
       # if: startsWith(github.ref, 'refs/tags/*')
@@ -87,6 +88,6 @@ jobs:
       # if: startsWith(github.ref, 'refs/tags/*')
       uses: softprops/action-gh-release@v1
       with:
-        files: release/**
+        files: release.tar.gz
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
