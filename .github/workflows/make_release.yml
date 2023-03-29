@@ -62,20 +62,31 @@ jobs:
     - name: Create release artifact
       if: startsWith(github.ref, 'refs/tags/v')
       run: |
-        mkdir -p release
-        cp implementations\samd20-optiboot-custom\samd20-optiboot-custom\Debug\samd20-optiboot-custom.hex release\samd20-optiboot-custom.hex
+        mkdir -p release\bin
+        mkdir -p release\bootloader_assets
+        mkdir -p release\bootloader_assets\user
+        mkdir -p release\bootloader_assets\deps\embedded-external-flash-memory
+        mkdir -p release\hex_writer_assets\app
+        mkdir -p release\hex_writer_assets\user
+        cp implementations\samd20-optiboot-custom\samd20-optiboot-custom\Debug\samd20-optiboot-custom.* release\bin
+        cp src\*.c release\bootloader_assets
+        cp src\*.h release\bootloader_assets
+        cp src\user\* release\bootloader_assets\user
+        cp src\deps\embedded-external-flash-memory\* release\bootloader_assets\deps\embedded-external-flash-memory
+        cp src\app\* release\hex_writer_assets\app
+        cp src\user\user_settings.h release\hex_writer_assets\user
 
     - name: Upload release artifact
-      if: startsWith(github.ref, 'refs/tags/v')
+      if: startsWith(github.ref, 'refs/tags/*')
       uses: actions/upload-artifact@v2
       with:
         name: firmware
         path: release/
 
     - name: Create GitHub Release
-      if: startsWith(github.ref, 'refs/tags/v')
+      if: startsWith(github.ref, 'refs/tags/*')
       uses: softprops/action-gh-release@v1
       with:
-        files: release\samd20-optiboot-custom.hex
+        files: release/**
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
