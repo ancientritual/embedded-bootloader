@@ -75,7 +75,8 @@ jobs:
         cp src\deps\embedded-external-flash-memory\* release\bootloader_assets\deps\embedded-external-flash-memory
         cp src\app\* release\hex_writer_assets\app
         cp src\user\user_settings.h release\hex_writer_assets\user
-        Compress-Archive -Path "release\*" -DestinationPath "release.tar.gz"
+        $version = .\utilities\version\get_version.ps1
+        tar -czvf "release_$version.tar.gz" release
 
     - name: Upload release artifact
       # if: startsWith(github.ref, 'refs/tags/*')
@@ -88,6 +89,6 @@ jobs:
       # if: startsWith(github.ref, 'refs/tags/*')
       uses: softprops/action-gh-release@v1
       with:
-        files: release.tar.gz
+        files: release_$version.tar.gz
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
