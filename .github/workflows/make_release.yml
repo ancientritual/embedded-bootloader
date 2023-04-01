@@ -76,7 +76,7 @@ jobs:
         cp src\app\* release\hex_writer_assets\app
         cp src\user\user_settings.h release\hex_writer_assets\user
         $version = .\utilities\version\get_version.ps1
-        tar -czvf "release_$version.tar.gz" release
+        tar -czvf "release.tar.gz" release
 
     - name: Upload release artifact
       # if: startsWith(github.ref, 'refs/tags/*')
@@ -89,6 +89,6 @@ jobs:
       # if: startsWith(github.ref, 'refs/tags/*')
       uses: softprops/action-gh-release@v1
       with:
-        files: "release_$version.tar.gz"
+        files: release.tar.gz
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
