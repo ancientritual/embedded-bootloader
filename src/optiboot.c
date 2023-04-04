@@ -86,7 +86,12 @@ int check_optiboot_image()
    {
       if (flex_image_header[i] != _header_key[i])
       {
-         printf("Invalid header key: %s\n", flex_image_header);
+         printf("Invalid header key: ");
+         for (int j = 0; j < sizeof(flex_image_header); j++)
+         {
+            printf("%X ", flex_image_header[j]);
+         }
+         printf("\n");
          return(OPTIBOOT_ERR_INVALID_HEADER);
       }
    }
